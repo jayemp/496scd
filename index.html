@@ -255,16 +255,13 @@
         rshadow = rim.clone(),
         shadows = [sshadow, mshadow, hshadow];
 
-    //Insert shadows before their respective opaque pals
     seconds.before(sshadow);
     minutes.before(mshadow);
     hours.before(hshadow);
     rim.before(rshadow);
 
-    //Create a filter to make a blurry black version of a thing
     var filter = Snap.filter.blur(0.1) + Snap.filter.brightness(0);
 
-    //Add the filter, shift and opacity to each of the shadows
     shadows.forEach(function (el) {
         el.attr({
             transform: "translate(0, 2)",
@@ -278,10 +275,10 @@
         filter: s.filter(Snap.filter.blur(0, 8) + Snap.filter.brightness(0)),
     })
 
-    var tick = new Audio('https://raw.githubusercontent.com/jayemp/496scd/main/tick.mp3');
+    const tick = new Audio('https://raw.githubusercontent.com/jayemp/496scd/main/tick.mp3');
 
     function playTick() {
-        tick.play();
+        new Audio('https://raw.githubusercontent.com/jayemp/496scd/main/tick.mp3').play();
     }
 
     function update() {
