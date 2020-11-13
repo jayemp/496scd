@@ -878,29 +878,38 @@
     function update() {
         var time = new Date();
 
-        multiplier = Math.exp(-(spedUpTime - time) / 60000 * 15);
-        console.log((100 + 40 * vol) * multiplier);
+        multiplier = Math.exp(-(spedUpTime - time) / 300000 * 12);
+        // console.log((100 + 40 * vol) * multiplier);
 
         gauge += (100 + 40 * vol) * multiplier;
 
         if (gauge >= 1000) {
-            spedUpTime.setSeconds(spedUpTime.getSeconds() + 1);
+            spedUpTime.setMilliseconds(spedUpTime.getMilliseconds() + 1000);
+            console.log(spedUpTime);
             gauge -= 1000;
+
+            setHours(spedUpTime);
+            setMinutes(spedUpTime);
+
+            // repeat for graphics bug
+            setSeconds(spedUpTime);
+            setSeconds(spedUpTime);
+            setSeconds(spedUpTime);
+
+            tick.pause();
+            tick.currentTime = 0.07;
+            tick.play();
         }
 
         // spedUpTime = updateSpedUpTime(spedUpTime, time, 0);
 
-        if (faceDetected) {
-            faceDetectedFor += 1;
-        }
+        // if (faceDetected) {
+        //     faceDetectedFor += 1;
+        // }
 
-        if (faceDetectedFor >= 3) {
-            // sync time
-        }
-
-        setHours(spedUpTime);
-        setMinutes(spedUpTime);
-        setSeconds(spedUpTime);
+        // if (faceDetectedFor >= 3) {
+        //     // sync time
+        // }
     }
 
     function setHours(t) {
@@ -970,7 +979,7 @@
         seconds.animate({
             transform: "rotate(" + angle + " " + face.cx + " " + face.cy + ")"
         },
-            600,
+            200,
             easing,
             function () {
                 if (angle === 360) {
@@ -986,13 +995,9 @@
         sshadow.animate({
             transform: "translate(0, 2) rotate(" + angle + " " + face.cx + " " + face.cy + 2 + ")"
         },
-            600,
+            200,
             easing
         );
-
-        tick.pause();
-        tick.currentTime = 0.07;
-        tick.play();
     }
 
     setInterval(update, 100);
