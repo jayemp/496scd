@@ -795,7 +795,7 @@
 <script>
     function updateBackground() {
         var today = new Date().getHours();
-        if (today >= 7 && today <= 19) {
+        if (today >= 7 && today < 19) {
             document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jayemp/496scd/main/background.jpg')";
         } else {
             document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jayemp/496scd/main/background-dark.jpg')";
