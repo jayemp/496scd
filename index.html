@@ -879,9 +879,15 @@
         var time = new Date();
 
         multiplier = Math.exp(-(spedUpTime - time) / 300000 * 12);
-        // console.log((100 + 40 * vol) * multiplier);
 
-        gauge += (100 + 40 * vol) * multiplier;
+        vol_multiplier = vol;
+        if (vol < 20) {
+            vol_multiplier = 0;
+        }
+
+        console.log(vol, vol_multiplier);
+
+        gauge += (100 + 40 * vol_multiplier) * multiplier;
 
         if (gauge >= 1000) {
             spedUpTime.setMilliseconds(spedUpTime.getMilliseconds() + 1000);
@@ -979,7 +985,7 @@
         seconds.animate({
             transform: "rotate(" + angle + " " + face.cx + " " + face.cy + ")"
         },
-            350,
+            75,
             easing,
             function () {
                 if (angle === 360) {
@@ -995,7 +1001,7 @@
         sshadow.animate({
             transform: "translate(0, 2) rotate(" + angle + " " + face.cx + " " + face.cy + 2 + ")"
         },
-            350,
+            75,
             easing
         );
     }
