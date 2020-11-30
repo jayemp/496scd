@@ -280,6 +280,11 @@
                 <circle fill="none" stroke="#BF4116" stroke-miterlimit="10" cx="243.5" cy="271" r="5" />
                 <circle fill="#BF4116" cx="243.5" cy="251" r="3.917" />
             </g>
+            <g id="realseconds">
+                <line fill="none" stroke="#3734EB" stroke-miterlimit="10" x1="243.5" y1="143" x2="243.5" y2="266" />
+                <circle fill="none" stroke="#3734EB" stroke-miterlimit="10" cx="243.5" cy="271" r="5" />
+                <circle fill="#3734EB" cx="243.5" cy="251" r="3.917" />
+            </g>
         </svg>
     </main>
 </body>
@@ -809,6 +814,7 @@
 <script>
     var s = Snap(document.getElementById("clock"));
     var seconds = s.select("#seconds"),
+        realseconds = s.select("#realseconds"),
         minutes = s.select("#minutes"),
         hours = s.select("#hours"),
         rim = s.select("#rim"),
@@ -878,7 +884,7 @@
     function update() {
         var time = new Date();
 
-        multiplier = Math.exp(-(spedUpTime - time) / 300000 * 12);
+        multiplier = Math.exp(-(spedUpTime - time) / 300000 * 8);
 
         vol_multiplier = vol;
         if (vol < 20) {
@@ -887,7 +893,9 @@
 
         console.log(vol, vol_multiplier);
 
-        gauge += (100 + 40 * vol_multiplier) * multiplier;
+        gauge += (100 + 25 * vol_multiplier) * multiplier;
+
+        setRealSeconds(time);
 
         if (gauge >= 1000) {
             spedUpTime.setMilliseconds(spedUpTime.getMilliseconds() + 1000);
@@ -899,13 +907,16 @@
 
             // repeat for graphics bug
             setSeconds(spedUpTime);
+            setRealSeconds(time);
             setSeconds(spedUpTime);
-            setSeconds(spedUpTime);
+            setRealSeconds(time);
 
             tick.pause();
             tick.currentTime = 0.07;
             tick.play();
         }
+
+        gauge = Math.min(gauge, 1000);
 
         // spedUpTime = updateSpedUpTime(spedUpTime, time, 0);
 
@@ -990,6 +1001,36 @@
             function () {
                 if (angle === 360) {
                     seconds.attr({
+                        transform: "rotate(" + 0 + " " + face.cx + " " + face.cy + ")"
+                    });
+                    sshadow.attr({
+                        transform: "translate(0, 2) rotate(" + 0 + " " + face.cx + " " + face.cy + 2 + ")"
+                    });
+                }
+            }
+        );
+        sshadow.animate({
+            transform: "translate(0, 2) rotate(" + angle + " " + face.cx + " " + face.cy + 2 + ")"
+        },
+            75,
+            easing
+        );
+    }
+
+    function setRealSeconds(t) {
+        t = t.getSeconds();
+        t %= 60;
+        var angle = t * 360 / 60;
+        // if ticking over to 0 seconds, animate angle to 360 and then switch angle to 0
+        if (angle === 0) angle = 360;
+        realseconds.animate({
+            transform: "rotate(" + angle + " " + face.cx + " " + face.cy + ")"
+        },
+            75,
+            easing,
+            function () {
+                if (angle === 360) {
+                    realseconds.attr({
                         transform: "rotate(" + 0 + " " + face.cx + " " + face.cy + ")"
                     });
                     sshadow.attr({
