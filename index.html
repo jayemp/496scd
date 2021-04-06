@@ -55,7 +55,7 @@
 
     <style>
         body {
-            background: url('https://raw.githubusercontent.com/jayemp/496scd/main/background.jpg');
+            background: url('https://raw.githubusercontent.com/jayemp/496scd/gh-pages/background.jpg');
             background-size: cover;
 
             margin: 0;
@@ -787,7 +787,7 @@
 
     function init() {
         // for unlocking audio playback in WebKit
-        new Audio('https://raw.githubusercontent.com/jayemp/496scd/main/tick.mp3').play();
+        new Audio('https://raw.githubusercontent.com/jayemp/496scd/gh-pages/tick.mp3').play();
 
         // init webcam
         // startFace();
@@ -801,9 +801,9 @@
     function updateBackground() {
         var today = new Date().getHours();
         if (today >= 7 && today < 19) {
-            document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jayemp/496scd/main/background.jpg')";
+            document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jayemp/496scd/gh-pages/background.jpg')";
         } else {
-            document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jayemp/496scd/main/background-dark.jpg')";
+            document.body.style.backgroundImage = "url('https://raw.githubusercontent.com/jayemp/496scd/gh-pages/background-dark.jpg')";
         }
     }
 
@@ -854,7 +854,7 @@
         filter: s.filter(Snap.filter.blur(0, 8) + Snap.filter.brightness(0)),
     })
 
-    const tick = new Audio('https://raw.githubusercontent.com/jayemp/496scd/main/tick.mp3');
+    const tick = new Audio('https://raw.githubusercontent.com/jayemp/496scd/gh-pages/tick.mp3');
 
     function playTick() {
         tick.pause();
